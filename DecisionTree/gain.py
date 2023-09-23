@@ -1,15 +1,21 @@
 from abc import ABC, abstractmethod
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Callable
 from math import log2
 
 
-# TODO: Get rid of the "Gain" class, make it all functions. 
+# TODO: Get rid of the "Gain" class, make it all functions.
 # (Make the gain function a passable function to e.g. information_gain)
+
+def _gain(s: List[Dict[str, Any]], attribute: str, chaos_operator: Callable) -> float:
+    pass
+
+def gain():
+    return NotImplemented
 
 class Gain(ABC):
 
     @abstractmethod
-    def __call__(s: List[Dict[str, Any]], attribute: str) -> float:
+    def __call__(s: List[Dict[str, Any]], attribute: str, chaos_operator: Callable) -> float:
         """
         calculate the gain from a partition of this set
 
@@ -37,11 +43,12 @@ class Gain(ABC):
         """
         pass
 
+
 class InformationGain(Gain):
 
     def __init__():
         pass
-    
+
     @staticmethod
     def evaluate(s: List[Dict[str, Any]], attribute: str) -> float:
         labels = [d["label"] for d in s]
