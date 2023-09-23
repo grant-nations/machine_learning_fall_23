@@ -1,103 +1,68 @@
-from abc import ABC, abstractmethod
 from typing import Dict, List, Any, Callable
 from math import log2
 
 
-# TODO: Get rid of the "Gain" class, make it all functions.
-# (Make the gain function a passable function to e.g. information_gain)
+def entropy(s: List[str]):
+    """
+    calculate the entropy of this list of labels
 
-def _gain(s: List[Dict[str, Any]], attribute: str, chaos_operator: Callable) -> float:
+    :param s: the set of labels to compute the entropy for
+    """
+
+    # get the number of items in this set
+    num_labels = len(s)
+
+    # label counts
+    labels = {}
+
+    for l in s:
+        labels[l] = labels.get(l, 0) + 1
+        # increase the count of this label
+
+    entropy = 0
+
+    for count in list(labels.values()):
+        prop = count/num_labels
+        entropy -= prop * log2(prop)
+
+    return entropy
+
+def gini(s: List[str]):
+    """
+    calculate the gini index of this set of labels
+
+    :param s: the set of labels to compute gini index for
+    """
     pass
 
-def gain():
-    return NotImplemented
+def majority_error(s: List[str]):
 
-class Gain(ABC):
+    """
+    calculate the majority error of this set of labels
 
-    @abstractmethod
-    def __call__(s: List[Dict[str, Any]], attribute: str, chaos_operator: Callable) -> float:
-        """
-        calculate the gain from a partition of this set
+    :param s: the set of labels to compute majority error for
+    """
+    pass
 
-        :param s: the set to partition as a list of dictionaries of the form
-        {
-            "attributes": {
-                "attr_a": {
-                    "val_1": True,
-                    "val_2": False,
-                    "val_3": False,
-                    "val_4": False
-                    },
-                "attr_b": {
-                    "val_1": False,
-                    "val_2": True,
-                    "val_3": False
-                },
-                ...
-            },
-            "label": 1
-        }
-        :param attribute: the attribute to partition on
+def gain(x, y, attributes, a_index, chaos_evalutaor=entropy):
+    """
+    :param x: set to partition
+    :param y: labels for x
+    :param attributes: list of attributes as tuples of (attribute, possible values)
+    :param a_index: index of attribute to partition on
+    :param chaos_evalutaor: function to evaluate chaos of a set
+    """
+    set_chaos = chaos_evalutaor(y)
 
-        :return: the gain from this partition
-        """
-        pass
+    partitions = {attr_val: [] for attr_val in attributes[a_index][1]}
 
+    for _x, _y in zip(x, y):
+        partitions[_x[a_index]].append(_y)
 
-class InformationGain(Gain):
+    partition_chaos = 0
 
-    def __init__():
-        pass
+    for partition_y in list(partitions.values()):
+        proportion_term = len(partition_y) / len(y)
+        partition_chaos += proportion_term * chaos_evalutaor(partition_y)
 
-    @staticmethod
-    def evaluate(s: List[Dict[str, Any]], attribute: str) -> float:
-        labels = [d["label"] for d in s]
-        s_entropy = InformationGain.entropy(labels)
-
-        partitions = {}
-
-        for d in s:
-            attr = d["attributes"][attribute]
-            for key, val in attr.items():
-                if val:
-                    # check if this partition exists
-                    if partitions.get(key) is None:
-                        partitions[key] = []
-
-                    # add this item to the correct partition set
-                    partitions[key].append(d)
-                    break
-
-        partition_entropy = 0
-        for part_set in list(partitions.values()):
-            part_labels = [d["label"] for d in part_set]
-            proportion_term = len(part_labels)/len(labels)
-            partition_entropy += proportion_term * InformationGain.entropy(part_labels)
-
-        return s_entropy - partition_entropy
-
-    @staticmethod
-    def entropy(s: List[str]):
-        """
-        calculate the entropy of this list of labels
-
-        :param s: the set of labels to compute the entropy for
-        """
-
-        # get the number of items in this set
-        num_labels = len(s)
-
-        # label counts
-        labels = {}
-
-        for l in s:
-            labels[l] = labels.get(l, 0) + 1
-            # increase the count of this label
-
-        entropy = 0
-
-        for count in list(labels.values()):
-            prop = count/num_labels
-            entropy -= prop * log2(prop)
-
-        return entropy
+    return set_chaos - partition_chaos
