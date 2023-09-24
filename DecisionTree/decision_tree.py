@@ -1,6 +1,27 @@
 from DecisionTree.gain import gain, entropy
 from collections import Counter
 from typing import List, Any, Union, Tuple, Callable
+import statistics
+
+def preprocess_numerical_attributes(x, attributes):
+    new_attributes = []
+    new_x = x[:][:] # make a copy of x
+
+    for i, (attr_name, attribute_vals) in enumerate(attributes):
+        if not isinstance(attribute_vals, list):
+            # find median value across all data points
+            median_val = statistics.median([float(_x[i]) for _x in x])
+            new_attribute = (f"{attr_name} < {median_val}", ["yes", "no"],)
+            new_attributes.append(new_attribute)
+
+            # change all x values to be binary instead of numerical 
+            for j in range(len(new_x)):
+                new_x[j][i] = "yes" if float(x[j][i]) < median_val else "no"
+
+        else:
+            new_attributes.append((attr_name, attribute_vals,))
+
+    return new_x, new_attributes
 
 
 def predict(x, attributes, tree):
