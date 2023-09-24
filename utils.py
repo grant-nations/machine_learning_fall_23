@@ -1,14 +1,21 @@
-def pretty_print_dict(d, indent=0):
-    for key, value in d.items():
-        if isinstance(value, dict):
-            print('  ' * indent + str(key) + ':')
-            pretty_print_dict(value, indent + 1)
-        elif isinstance(value, list):
-            print('  ' * indent + str(key) + ':')
-            for item in value:
-                if isinstance(item, dict):
-                    pretty_print_dict(item, indent + 2)
-                else:
-                    print('  ' * (indent + 1) + str(item))
-        else:
-            print('  ' * indent + str(key) + ': ' + str(value))
+import math
+
+def bin_entropy(num_pos: int, num_neg: int):
+    """
+    Calculate the entropy of a set that contains two classes.
+    :param num_pos: Number of positive class.
+    :param num_neg: Number of negative class.
+    :return: Entropy of the set.
+    """
+    total = num_pos + num_neg
+    prop_pos = num_pos / total
+    prop_neg = num_neg / total
+    return -1 * prop_pos * math.log(prop_pos, 2) - prop_neg * math.log(prop_neg, 2)
+
+if __name__ == "__main__":
+
+    while True:
+        num_pos = int(input("Number of positive class: "))
+        num_neg = int(input("Number of negative class: "))
+        print("Entropy: ", bin_entropy(num_pos, num_neg))
+        print()
