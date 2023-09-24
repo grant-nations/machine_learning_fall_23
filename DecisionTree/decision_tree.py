@@ -3,9 +3,23 @@ from collections import Counter
 from typing import List, Any, Union, Tuple, Callable
 import statistics
 
+
+def preprocess_unknown_values(x, attributes):
+    new_x = x[:][:]
+    for i, (attr_name, attr_vals) in enumerate(attributes):
+        all_attr_vals = [_x[i] for _x in x]
+        most_common_val = Counter(all_attr_vals).most_common(1)[0][0]
+
+        for j in range(len(x)):
+            if x[j][i] == "unknown":
+                new_x[j][i] = most_common_val
+
+    return new_x
+
+
 def preprocess_numerical_attributes(x, attributes):
     new_attributes = []
-    new_x = x[:][:] # make a copy of x
+    new_x = x[:][:]  # make a copy of x
 
     for i, (attr_name, attribute_vals) in enumerate(attributes):
         if not isinstance(attribute_vals, list):
@@ -14,7 +28,7 @@ def preprocess_numerical_attributes(x, attributes):
             new_attribute = (f"{attr_name} < {median_val}", ["yes", "no"],)
             new_attributes.append(new_attribute)
 
-            # change all x values to be binary instead of numerical 
+            # change all x values to be binary instead of numerical
             for j in range(len(new_x)):
                 new_x[j][i] = "yes" if float(x[j][i]) < median_val else "no"
 
