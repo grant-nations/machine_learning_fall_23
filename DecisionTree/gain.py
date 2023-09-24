@@ -12,6 +12,9 @@ def entropy(s: List[str]):
     # get the number of items in this set
     num_labels = len(s)
 
+    if num_labels == 0:
+        return 0
+
     # label counts
     labels = {}
 
@@ -33,7 +36,23 @@ def gini(s: List[str]):
 
     :param s: the set of labels to compute gini index for
     """
-    pass
+    num_labels = len(s)
+
+    if num_labels == 0:
+        return 0
+
+    # label counts
+    labels = {}
+
+    for l in s:
+        labels[l] = labels.get(l, 0) + 1
+        # increase the count of this label
+
+    gini_sum_term = 0
+    for count in list(labels.values()):
+        gini_sum_term += (count/num_labels) ** 2
+
+    return 1 - gini_sum_term
 
 def majority_error(s: List[str]):
 
@@ -42,7 +61,26 @@ def majority_error(s: List[str]):
 
     :param s: the set of labels to compute majority error for
     """
-    pass
+   # get the number of items in this set
+    num_labels = len(s)
+
+    if num_labels == 0:
+        return 0
+
+    # label counts
+    labels = {}
+
+    for l in s:
+        labels[l] = labels.get(l, 0) + 1
+        # increase the count of this label
+
+    max_label_count = 0
+
+    for count in list(labels.values()):
+        if count > max_label_count:
+            max_label_count = count
+
+    return 1 - (max_label_count / num_labels)
 
 def gain(x, y, attributes, a_index, chaos_evalutaor=entropy):
     """

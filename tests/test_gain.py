@@ -1,10 +1,10 @@
-from DecisionTree.gain import InformationGain
+from DecisionTree.gain import entropy, majority_error
 
 
 def test_entropy():
-    assert InformationGain.entropy(["a", "b"]) == 1
-    assert InformationGain.entropy(["a", "a", "a", "a"]) == 0
+    assert entropy(["a", "b"]) == 1
+    assert entropy(["a", "a", "a", "a"]) == 0
 
-
-def test_information_gain():
-    assert False
+def test_majority_error():
+    assert majority_error(["a", "a", "a", "a", "b", "b", "c", "d"]) == 0.5
+    assert majority_error(["a", "a", "a", "a"]) == 0

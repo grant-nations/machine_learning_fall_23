@@ -54,7 +54,7 @@ def _train(x: List[Any],
 
     attributes_list = [a[0] for a in attributes]
 
-    best_gain = 0
+    best_gain = -1
     best_attribute = None
     best_attribute_index = None
 
@@ -89,6 +89,6 @@ def _train(x: List[Any],
             # add leaf node
             branch['node'] = most_common_label
         else:
-            branch['node'] = train(x_v, y_v, new_attributes)
+            branch['node'] = _train(x_v, y_v, new_attributes, curr_depth, max_depth, chaos_evaluator)
 
     return root_node
