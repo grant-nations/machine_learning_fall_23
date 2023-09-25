@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     while True:
         individual_chaoses = [float(x) for x in input("Individual chaos terms: ").strip().split(" ")]
-        set_sizes = [int(x) for x in input("Set sizes: ").strip().split(" ")]
+        set_sizes = [float(x) for x in input("Set sizes: ").strip().split(" ")]
         old_total_chaos = float(input("Old total chaos: "))
         print("Gain: ", gain(individual_chaoses, set_sizes, old_total_chaos))
         print()

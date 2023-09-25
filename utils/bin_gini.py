@@ -13,5 +13,5 @@ if __name__ == "__main__":
     while True:
         num_pos = int(input("Number of positive class: "))
         num_neg = int(input("Number of negative class: "))
-        print("Majority error: ", bin_gini(num_pos, num_neg))
+        print("Gini index: ", bin_gini(num_pos, num_neg))
         print()
