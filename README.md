@@ -31,7 +31,7 @@ This shell script is designed to automate the execution of Python scripts relate
    Execute the shell script by running the following command:
 
    ```
-   source ./run.sh
+   ./run.sh
    ```
 
 5. **Follow the Output**
