@@ -4,9 +4,18 @@ from typing import List, Any, Union, Tuple, Callable
 import statistics
 
 
-def preprocess_unknown_values(x, attributes):
+def preprocess_unknown_values(x: List[Any],
+                              attributes: List[Tuple[str, List[Union[str, int]]]],
+                              ):
+    """
+    Preprocess unknown values in x by replacing them with the most common value for that attribute.
+
+    :param x: the set of data points
+    :param attributes: the list of attributes as tuples of (attribute, possible values)
+    """
+
     new_x = x[:][:]
-    for i, (attr_name, attr_vals) in enumerate(attributes):
+    for i, _ in enumerate(attributes):
         all_attr_vals = [_x[i] for _x in x]
         most_common_val = Counter(all_attr_vals).most_common(1)[0][0]
 
@@ -17,7 +26,15 @@ def preprocess_unknown_values(x, attributes):
     return new_x
 
 
-def preprocess_numerical_attributes(x, attributes):
+def preprocess_numerical_attributes(x: List[Any],
+                                    attributes: List[Tuple[str, List[Union[str, int]]]],
+                                    ):
+    """
+    Preprocess numerical attributes by converting them to binary attributes.
+
+    :param x: the set of data points
+    :param attributes: the list of attributes as tuples of (attribute, possible values)
+    """
     new_attributes = []
     new_x = x[:][:]  # make a copy of x
 
@@ -38,7 +55,16 @@ def preprocess_numerical_attributes(x, attributes):
     return new_x, new_attributes
 
 
-def predict(x, attributes, tree):
+def predict(x: List[Any],
+            attributes: List[Tuple[str, List[Union[str, int]]]],
+            tree: Union[dict, str]):
+    """
+    Predict the label for a data point x using the decision tree.
+
+    :param x: the data point to predict
+    :param attributes: the list of attributes as tuples of (attribute, possible values)
+    :param tree: the decision tree (a dict or a label if it is a leaf node)
+    """
     if not isinstance(tree, dict):
         return tree  # this is a label
 
@@ -62,6 +88,8 @@ def train(x: List[Any],
     :param x: the set of training data
     :param y: the set of training labels
     :param attributes: a list of attributes as tuples of (attribute, possible values)
+    :param max_depth: the maximum depth of the tree
+    :param chaos_evaluator: the function to evaluate chaos of a set (e.g. entropy, gini, majority error)
     """
     return _train(x, y, attributes, 0, max_depth, chaos_evaluator)
 
