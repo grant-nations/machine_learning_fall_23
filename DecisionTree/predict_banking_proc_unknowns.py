@@ -1,4 +1,5 @@
-from DecisionTree.decision_tree import train, predict, preprocess_numerical_attributes, preprocess_unknown_values
+from DecisionTree.decision_tree import train, predict
+from Preprocessing.preprocessing import preprocess_numerical_attributes, preprocess_unknown_values
 import os
 from DecisionTree.gain import majority_error, entropy, gini
 
@@ -26,7 +27,7 @@ attributes = [
 x = []
 y = []
 
-data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
+data_dir = os.path.join(os.path.dirname(__file__), "data")
 train_filename = os.path.join(data_dir, "bank", "train.csv")
 with open(train_filename) as f:
     for line in f:

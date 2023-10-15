@@ -1,12 +1,11 @@
-from DecisionTree.gain import gain, entropy
-from collections import Counter
+from DecisionStump.gain import gain, entropy
 from typing import List, Any, Union, Tuple, Callable
 
 def predict(x: List[Any],
             attributes: List[Tuple[str, List[Union[str, int]]]],
             tree: Union[dict, str]):
     """
-    Predict the label for a data point x using the decision tree.
+    Predict the label for a data point x using the decision stump.
 
     :param x: the data point to predict
     :param attributes: the list of attributes as tuples of (attribute, possible values)
@@ -26,41 +25,47 @@ def predict(x: List[Any],
 
 def train(x: List[Any],
           y: List[str],
+          d: List[float],
           attributes: List[Tuple[str, List[Union[str, int]]]],
-          max_depth: Union[int, None] = None,
           chaos_evaluator: Callable = entropy):
     """
-    train a decision tree using ID3.
+    train a decision stump using ID3.
 
     :param x: the set of training data
     :param y: the set of training labels
+    :param d: the weights of each training example
     :param attributes: a list of attributes as tuples of (attribute, possible values)
-    :param max_depth: the maximum depth of the tree
     :param chaos_evaluator: the function to evaluate chaos of a set (e.g. entropy, gini, majority error)
     """
-    return _train(x, y, attributes, 0, max_depth, chaos_evaluator)
+    return _train(x, y, d, attributes, 0, chaos_evaluator)
 
 
 def _train(x: List[Any],
            y: List[str],
+           d: List[float],
            attributes: List[Tuple[str, List[Union[str, int]]]],
            curr_depth: int,
-           max_depth: Union[int, None],
            chaos_evaluator: Callable):
+    max_depth = 2 # this is hardcoded for stump
+
     curr_depth += 1
 
     if len(set(y)) == 1:
         # all labels are the same
         return y[0]
 
-    most_common_label = Counter(y).most_common(1)[0][0]
+    label_scores = {}
+    for label, weight in zip(y, d):
+        label_scores[label] = label_scores.get(label, 0) + weight
+
+    highest_scoring_label = max(label_scores, key=label_scores.get)
 
     if len(attributes) == 0:
         # no more attributes to split on
-        return most_common_label
+        return highest_scoring_label
 
-    if max_depth and curr_depth >= max_depth:
-        return most_common_label
+    if curr_depth >= max_depth:
+        return highest_scoring_label
 
     attributes_list = [a[0] for a in attributes]
 
@@ -69,7 +74,7 @@ def _train(x: List[Any],
     best_attribute_index = None
 
     for i, a in enumerate(attributes_list):
-        g = gain(x, y, attributes, i, chaos_evalutaor=chaos_evaluator)
+        g = gain(x, y, d, attributes, i, chaos_evalutaor=chaos_evaluator)
         if g >= best_gain:
             best_gain = g
             best_attribute = a
@@ -88,17 +93,19 @@ def _train(x: List[Any],
 
         x_v = []
         y_v = []
+        d_v = []
 
         for i, _x in enumerate(x):
             _x_attr_val = _x[best_attribute_index]
             if _x_attr_val == attribute_val:
                 x_v.append(_x[:best_attribute_index] + _x[best_attribute_index + 1:])
                 y_v.append(y[i])
+                d_v.append(d[i])
 
         if len(x_v) == 0:
             # add leaf node
-            branch['node'] = most_common_label
+            branch['node'] = highest_scoring_label
         else:
-            branch['node'] = _train(x_v, y_v, new_attributes, curr_depth, max_depth, chaos_evaluator)
+            branch['node'] = _train(x_v, y_v, d_v, new_attributes, curr_depth, chaos_evaluator)
 
     return root_node
