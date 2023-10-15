@@ -3,7 +3,7 @@ This is a machine learning library developed by Grant Nations for CS5350/6350 at
 
 # Decision Tree Functions
 
-The `decision_tree.py` module in this directory provides functions for training and using a decision tree for classification using the ID3 algorithm. The functions included are:
+The `decision_tree.py` module in the `DecisionTree` directory provides functions for training and using a decision tree for classification using the ID3 algorithm. The functions included are:
 
 1. `preprocess_unknown_values(x, attributes)`
 
