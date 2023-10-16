@@ -1,4 +1,5 @@
-from DecisionTree.decision_tree import train, predict, preprocess_numerical_attributes
+from DecisionTree.decision_tree import train, predict
+from Preprocessing.preprocessing import preprocess_numerical_attributes
 import os
 from DecisionTree.gain import majority_error, entropy, gini
 
@@ -55,7 +56,7 @@ for chaos_function, name in [(majority_error, "majority error"), (entropy, "info
     test_errors = []
     train_errors = []
 
-    for depth in range(1, 17):
+    for depth in range(2):
         print(f"  max depth: {depth} -----------")
         print("    training decision tree... ", end="", flush=True)
 
