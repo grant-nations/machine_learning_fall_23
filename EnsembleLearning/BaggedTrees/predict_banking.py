@@ -1,6 +1,6 @@
 from Preprocessing.preprocessing import preprocess_numerical_attributes
 import os
-from EnsembleLearning.adaboost import train, predict
+from EnsembleLearning.BaggedTrees import train, predict
 import matplotlib.pyplot as plt
 from DecisionStump import decision_stump
 
@@ -97,23 +97,23 @@ for num_iters in range(0, max_iters + 1, step):
     testing_errors.append(prediction_error)
 
 
-# this ensemble will have max_iters stumps
-stumps = [e[1] for e in ensemble]
-stump_test_errors = []
-stump_train_errors = []
+# this ensemble will have max_iters trees
+trees = [e[1] for e in ensemble]
+tree_test_errors = []
+tree_train_errors = []
 
 iterations = list(range(0, max_iters + 1, step))
 iterations[0] = 1
 
 for i in iterations:
-    stump = stumps[i - 1]
+    stump = trees[i - 1]
     incorrect_predictions = 0
     for _x, _y in zip(x_proc, y):
         if decision_stump.predict(_x, attributes_proc, stump) != _y:
             incorrect_predictions += 1
 
     prediction_error = incorrect_predictions / len(x_proc)
-    stump_train_errors.append(prediction_error)
+    tree_train_errors.append(prediction_error)
 
     incorrect_predictions = 0
     for _x_test, _y_test in zip(x_test_proc, y_test):
@@ -121,7 +121,7 @@ for i in iterations:
             incorrect_predictions += 1
 
     prediction_error = incorrect_predictions / len(x_test_proc)
-    stump_test_errors.append(prediction_error)
+    tree_test_errors.append(prediction_error)
 
 
 # Plotting training and testing errors
@@ -136,8 +136,8 @@ plt.legend()
 
 # Plotting stump training and testing errors
 plt.subplot(1, 2, 2)
-plt.plot(iterations, stump_train_errors, label='Stump Training Error')
-plt.plot(iterations, stump_test_errors, label='Stump Testing Error')
+plt.plot(iterations, tree_train_errors, label='Stump Training Error')
+plt.plot(iterations, tree_test_errors, label='Stump Testing Error')
 plt.xlabel('Iterations')
 plt.ylabel('Error')
 plt.title('Stump Training and Testing Errors')
