@@ -147,5 +147,5 @@ plt.legend()
 plt.tight_layout()
 
 # Show the plots
-plt.savefig("adaboost_error.png")
+# plt.savefig("adaboost_error.png")
 # plt.show()

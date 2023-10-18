@@ -1,8 +1,8 @@
 from Preprocessing.preprocessing import preprocess_numerical_attributes
 import os
-from EnsembleLearning.BaggedTrees import train, predict
+from EnsembleLearning.BaggedTrees.bagged_trees import train, predict
+from DecisionTree import decision_tree
 import matplotlib.pyplot as plt
-from DecisionStump import decision_stump
 
 label_values = ['yes', 'no']
 attributes = [
@@ -28,7 +28,7 @@ attributes = [
 x = []
 y = []
 
-data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Data")
+data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "Data")
 train_filename = os.path.join(data_dir, "bank", "train.csv")
 with open(train_filename) as f:
     for line in f:
@@ -55,14 +55,14 @@ training_errors = []
 testing_errors = []
 
 
-max_iters = 500
+max_trees = 500
 step = 100
 
 ensemble = None
-for num_iters in range(0, max_iters + 1, step):
-    if num_iters == 0:
-        num_iters = 1
-    ensemble = train(x_proc, y, attributes_proc, num_iters)
+for num_trees in range(0, max_trees + 1, step):
+    if num_trees == 0:
+        num_trees = 1
+    ensemble = train(x_proc, y, attributes_proc, num_trees)
 
     tot_predictions = 0
     incorrect_predictions = 0
@@ -96,56 +96,46 @@ for num_iters in range(0, max_iters + 1, step):
 
     testing_errors.append(prediction_error)
 
+    # Now, let's plot the results
+num_trees_range = list(range(0, max_trees + 1, step))
+num_trees_range[0] = 1
 
-# this ensemble will have max_iters trees
-trees = [e[1] for e in ensemble]
-tree_test_errors = []
-tree_train_errors = []
+plt.plot(num_trees_range, training_errors, label='Training Errors')
+plt.plot(num_trees_range, testing_errors, label='Testing Errors')
 
-iterations = list(range(0, max_iters + 1, step))
-iterations[0] = 1
-
-for i in iterations:
-    stump = trees[i - 1]
-    incorrect_predictions = 0
-    for _x, _y in zip(x_proc, y):
-        if decision_stump.predict(_x, attributes_proc, stump) != _y:
-            incorrect_predictions += 1
-
-    prediction_error = incorrect_predictions / len(x_proc)
-    tree_train_errors.append(prediction_error)
-
-    incorrect_predictions = 0
-    for _x_test, _y_test in zip(x_test_proc, y_test):
-        if decision_stump.predict(_x_test, attributes_proc, stump) != _y_test:
-            incorrect_predictions += 1
-
-    prediction_error = incorrect_predictions / len(x_test_proc)
-    tree_test_errors.append(prediction_error)
-
-
-# Plotting training and testing errors
-plt.figure(figsize=(10, 5))
-plt.subplot(1, 2, 1)
-plt.plot(iterations, training_errors, label='Training Error')
-plt.plot(iterations, testing_errors, label='Testing Error')
-plt.xlabel('Iterations')
-plt.ylabel('Error')
-plt.title('Training and Testing Errors')
+plt.xlabel('Number of Trees')
+plt.ylabel('Error Rate')
+plt.title('Training and Testing Errors vs Number of Trees')
 plt.legend()
+plt.savefig("bagged_trees_error.png")
+plt.show()
 
-# Plotting stump training and testing errors
-plt.subplot(1, 2, 2)
-plt.plot(iterations, tree_train_errors, label='Stump Training Error')
-plt.plot(iterations, tree_test_errors, label='Stump Testing Error')
-plt.xlabel('Iterations')
-plt.ylabel('Error')
-plt.title('Stump Training and Testing Errors')
-plt.legend()
+single_tree = decision_tree.train(x_proc, y, attributes_proc)
 
-# Adjust layout
-plt.tight_layout()
+tot_predictions = 0
+incorrect_predictions = 0
 
-# Show the plots
-plt.savefig("adaboost_error.png")
-# plt.show()
+print("Single tree prediction error (train): ", end="", flush=True)
+
+for _x, _y in zip(x_proc, y):
+    if decision_tree.predict(_x, attributes_proc, single_tree) != _y:
+        incorrect_predictions += 1
+
+    tot_predictions += 1
+
+prediction_error = incorrect_predictions / tot_predictions
+print(f"{round(prediction_error, 3)}")
+
+print("Single tree prediction error (test): ", end="", flush=True)
+
+tot_predictions = 0
+incorrect_predictions = 0
+
+for _x_test, _y_test in zip(x_test_proc, y_test):
+    if decision_tree.predict(_x_test, attributes_proc, single_tree) != _y_test:
+        incorrect_predictions += 1
+
+    tot_predictions += 1
+
+prediction_error = incorrect_predictions / tot_predictions
+print(f"{round(prediction_error, 3)}")

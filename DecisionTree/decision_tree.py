@@ -22,6 +22,8 @@ def predict(x: List[Any],
             for branch in tree["branches"]:
                 if branch["value"] == x_value:
                     return predict(x, attributes, branch["node"])
+                
+    return None
 
 
 def train(x: List[Any],

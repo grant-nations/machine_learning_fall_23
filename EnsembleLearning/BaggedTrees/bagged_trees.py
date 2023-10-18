@@ -11,7 +11,7 @@ from typing import Union, List, Any, Tuple, Dict
 
 def predict(x: List[Any],
             attributes: List[Tuple[str, List[Union[str, int]]]],
-            ensemble: List[Dict[Any]]):
+            ensemble: List[Dict[Any, Any]]):
     """
     :param x: example to predict label of
     :param attributes: list of attributes as tuples of (attribute, possible values)
@@ -32,23 +32,23 @@ def predict(x: List[Any],
 def train(x: List[Any],
           y: List[str],
           attributes: List[Tuple[str, List[Union[str, int]]]],
-          num_iterations,
+          num_trees,
           tree_depth: Union[int, None] = None):
     """
     :param x: the x values to train on
     :param y: the corresponding labels to the training data
     :param attributes: list of attributes as tuples of (attribute, possible values)
-    :param num_iters: number of iterations to run the algorithm for
+    :param num_trees: number of trees to use in ensemble
     """
     ensemble = []
     indices = list(range(len(x)))
 
-    for _ in range(num_iterations):
+    for _ in range(num_trees):
 
         # bootstrap samples
         bootstrap_indices = random.choices(indices, k=len(x))
-        x_bootstrap = [x[i] for i in indices]
-        y_bootstrap = [y[i] for i in indices]
+        x_bootstrap = [x[i] for i in bootstrap_indices]
+        y_bootstrap = [y[i] for i in bootstrap_indices]
 
         # train decision tree
         tree = decision_tree.train(

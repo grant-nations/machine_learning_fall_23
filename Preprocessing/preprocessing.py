@@ -51,3 +51,23 @@ def preprocess_numerical_attributes(x: List[Any],
             new_attributes.append((attr_name, attribute_vals,))
 
     return new_x, new_attributes
+
+def convert_labels(y, old_labels, new_labels):
+    """
+    Convert old labels in y to new labels.
+
+    Args:
+        y (list): Output vector with old labels.
+        old_labels (list): List of old labels.
+        new_labels (list): List of corresponding new labels.
+
+    Returns:
+        list: Output vector with converted labels.
+    """
+    # Create a dictionary mapping old labels to new labels
+    label_map = dict(zip(old_labels, new_labels))
+
+    # Use a list comprehension to convert labels
+    y_converted = [label_map[label] if label in label_map else label for label in y]
+
+    return y_converted
