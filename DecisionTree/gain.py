@@ -82,15 +82,15 @@ def majority_error(s: List[str]):
 
     return 1 - (max_label_count / num_labels)
 
-def gain(x, y, attributes, a_index, chaos_evalutaor=entropy):
+def gain(x, y, attributes, a_index, chaos_evaluator=entropy):
     """
     :param x: set to partition
     :param y: labels for x
     :param attributes: list of attributes as tuples of (attribute, possible values)
     :param a_index: index of attribute to partition on
-    :param chaos_evalutaor: function to evaluate chaos of a set
+    :param chaos_evaluator: function to evaluate chaos of a set
     """
-    set_chaos = chaos_evalutaor(y)
+    set_chaos = chaos_evaluator(y)
 
     partitions = {attr_val: [] for attr_val in attributes[a_index][1]}
 
@@ -101,6 +101,6 @@ def gain(x, y, attributes, a_index, chaos_evalutaor=entropy):
 
     for partition_y in list(partitions.values()):
         proportion_term = len(partition_y) / len(y)
-        partition_chaos += proportion_term * chaos_evalutaor(partition_y)
+        partition_chaos += proportion_term * chaos_evaluator(partition_y)
 
     return set_chaos - partition_chaos

@@ -1,7 +1,7 @@
 import numpy as np
 from numpy.linalg import inv
 
-X = np.array([[1, -1, 2, 1], [1, 1, 3, 1], 
+X = np.array([[1, -1, 2, 1], [1, 1, 3, 1],
               [-1, 1, 0, 1], [1, 2, -4, 1], [3, -1, -1, 1]])
 Y = np.array([[1], [4], [-1], [-2], [0]])
 
@@ -19,21 +19,19 @@ def db(x_i, y_i, w, b):
     return -1 * (y_i - (w.T @ x_i + b))
 
 
-def stochastic_grad_descent(X, Y, w, b, r, num_iters):
-    i = 0
+def stochastic_grad_descent(x, y, w, b, r, convergence_tol):
+
+    indices = np.arange(len(x))
     for _ in range(num_iters):
-        step_dw = dw(X[i], Y[i], w, b)
-        step_db = db(X[i], Y[i], w, b)
+        i = np.random(indices)
+        step_dw = dw(x[i], y[i], w, b)
+        step_db = db(x[i], y[i], w, b)
 
         w = w - r * step_dw
         b = b - r * step_db
 
-        print(f"step: {i}")
-        print(f"\tdw: {step_dw}, db: {step_db}")
-        print(f"\tw: {w}, b: {b}")
-
-        i = (i + 1) % len(X)
     return w, b
+
 
 X = np.array([[1, -1, 2], [1, 1, 3], [-1, 1, 0], [1, 2, -4], [3, -1, -1]])
 w = np.array([0, 0, 0])

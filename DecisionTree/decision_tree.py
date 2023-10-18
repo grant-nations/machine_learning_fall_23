@@ -71,7 +71,7 @@ def _train(x: List[Any],
     best_attribute_index = None
 
     for i, a in enumerate(attributes_list):
-        g = gain(x, y, attributes, i, chaos_evalutaor=chaos_evaluator)
+        g = gain(x, y, attributes, i, chaos_evaluator=chaos_evaluator)
         if g >= best_gain:
             best_gain = g
             best_attribute = a
