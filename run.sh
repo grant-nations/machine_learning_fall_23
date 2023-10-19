@@ -3,16 +3,45 @@
 # set PYTHONPATH
 export PYTHONPATH=$(pwd)
 
-# run the code for problem 2b
+# PROBLEM 2A
+echo -e "\nRunning python script for problem 2a...\n"
+python3 EnsembleLearning/Adaboost/predict_banking.py
+
+# PROBLEM 2B
 echo -e "\nRunning python script for problem 2b...\n"
-python3 DecisionTree/predict_car.py
+python3 EnsembleLearning/BaggedTrees/predict_banking.py
 
-# run the code for problem 3a
-echo -e "\nRunning python script for problem 3a...\n"
-python3 DecisionTree/predict_banking.py
+# PROBLEM 2C
+echo -e "\nRunning python script for problem 2c...\n"
 
-# run the code for problem 3b
-echo -e "\nRunning python script for problem 3b...\n"
-python3 DecisionTree/predict_banking_proc_unknowns.py
+# the first argument is the number of predictors
+# the second argument is the number of trees per predictor
+# the third argument is the number of samples per predictor
+python3 EnsembleLearning/BaggedTrees/squared_error.py 10 50 100
+
+
+# PROBLEM 2D
+echo -e "\nRunning python script for problem 2d...\n"
+python3 EnsembleLearning/RandomForests/predict_banking.py
+
+# PROBLEM 2E
+echo -e "\nRunning python script for problem 2e...\n"
+
+# the first argument is the number of predictors
+# the second argument is the number of trees per predictor
+# the third argument is the number of samples per predictor
+python3 EnsembleLearning/RandomForests/squared_error.py 10 50 100
+
+# PROBLEM 4A
+echo -e "\nRunning python script for problem 4a...\n"
+python3 LinearRegression/BatchGradDescent/predict_concrete.py
+
+# PROBLEM 4B
+echo -e "\nRunning python script for problem 4b...\n"
+python3 LinearRegression/StochasticGradDescent/predict_concrete.py
+
+# PROBLEM 4C
+echo -e "\nRunning python script for problem 4c...\n"
+python3 LinearRegression/AnalyticalSolution/predict_concrete.py
 
 echo -e "\nDone.\n"

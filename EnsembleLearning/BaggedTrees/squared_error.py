@@ -5,6 +5,20 @@ from DecisionTree import decision_tree
 import random
 import statistics
 from Utils.spinner import progress_spinner
+import sys
+
+num_predictors = None
+num_trees = None
+num_samples = None
+
+if len(sys.argv) > 3:
+    num_predictors = int(sys.argv[1])
+    num_trees = int(sys.argv[2])
+    num_samples = int(sys.argv[3])
+else:
+    num_predictors = 100
+    num_trees = 500
+    num_samples = 1000
 
 label_values = ['yes', 'no']
 attributes = [
@@ -60,9 +74,6 @@ indices_arr = list(range(len(x_proc)))
 
 ensembles = []
 
-num_predictors = 100
-num_trees = 500
-num_samples = 1000
 for i in range(num_predictors):
     progress_spinner("generating decision tree ensembles...", num_predictors, i + 1)
     # sample 1000 examples without replacement from training dataset

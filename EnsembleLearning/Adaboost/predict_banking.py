@@ -1,7 +1,7 @@
 from Preprocessing.preprocessing import preprocess_numerical_attributes
 import os
 from EnsembleLearning.Adaboost.adaboost import train, predict
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from DecisionStump import decision_stump
 
 label_values = ['yes', 'no']
@@ -28,7 +28,7 @@ attributes = [
 x = []
 y = []
 
-data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Data")
+data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "Data")
 train_filename = os.path.join(data_dir, "bank", "train.csv")
 with open(train_filename) as f:
     for line in f:
@@ -62,7 +62,10 @@ ensemble = None
 for num_iters in range(0, max_iters + 1, step):
     if num_iters == 0:
         num_iters = 1
+        
+    print(f"Training with {num_iters} iterations...", end="", flush=True)
     ensemble = train(x_proc, y, attributes_proc, num_iters)
+    print(" done.")
 
     tot_predictions = 0
     incorrect_predictions = 0
@@ -124,27 +127,27 @@ for i in iterations:
     stump_test_errors.append(prediction_error)
 
 
-# Plotting training and testing errors
-plt.figure(figsize=(10, 5))
-plt.subplot(1, 2, 1)
-plt.plot(iterations, training_errors, label='Training Error')
-plt.plot(iterations, testing_errors, label='Testing Error')
-plt.xlabel('Iterations')
-plt.ylabel('Error')
-plt.title('Training and Testing Errors')
-plt.legend()
+# # Plotting training and testing errors
+# plt.figure(figsize=(10, 5))
+# plt.subplot(1, 2, 1)
+# plt.plot(iterations, training_errors, label='Training Error')
+# plt.plot(iterations, testing_errors, label='Testing Error')
+# plt.xlabel('Iterations')
+# plt.ylabel('Error')
+# plt.title('Training and Testing Errors')
+# plt.legend()
 
-# Plotting stump training and testing errors
-plt.subplot(1, 2, 2)
-plt.plot(iterations, stump_train_errors, label='Stump Training Error')
-plt.plot(iterations, stump_test_errors, label='Stump Testing Error')
-plt.xlabel('Iterations')
-plt.ylabel('Error')
-plt.title('Stump Training and Testing Errors')
-plt.legend()
+# # Plotting stump training and testing errors
+# plt.subplot(1, 2, 2)
+# plt.plot(iterations, stump_train_errors, label='Stump Training Error')
+# plt.plot(iterations, stump_test_errors, label='Stump Testing Error')
+# plt.xlabel('Iterations')
+# plt.ylabel('Error')
+# plt.title('Stump Training and Testing Errors')
+# plt.legend()
 
-# Adjust layout
-plt.tight_layout()
+# # Adjust layout
+# plt.tight_layout()
 
 # Show the plots
 # plt.savefig("adaboost_error.png")

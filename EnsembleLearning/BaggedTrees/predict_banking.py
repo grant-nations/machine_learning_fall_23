@@ -2,7 +2,7 @@ from Preprocessing.preprocessing import preprocess_numerical_attributes
 import os
 from EnsembleLearning.BaggedTrees.bagged_trees import train, predict
 from DecisionTree import decision_tree
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 label_values = ['yes', 'no']
 attributes = [
@@ -62,7 +62,9 @@ ensemble = None
 for num_trees in range(0, max_trees + 1, step):
     if num_trees == 0:
         num_trees = 1
+    print(f"Training with {num_trees} trees...", end='', flush=True)
     ensemble = train(x_proc, y, attributes_proc, num_trees)
+    print(" done.")
 
     tot_predictions = 0
     incorrect_predictions = 0
@@ -96,19 +98,18 @@ for num_trees in range(0, max_trees + 1, step):
 
     testing_errors.append(prediction_error)
 
-    # Now, let's plot the results
 num_trees_range = list(range(0, max_trees + 1, step))
 num_trees_range[0] = 1
 
-plt.plot(num_trees_range, training_errors, label='Training Errors')
-plt.plot(num_trees_range, testing_errors, label='Testing Errors')
+# plt.plot(num_trees_range, training_errors, label='Training Errors')
+# plt.plot(num_trees_range, testing_errors, label='Testing Errors')
 
-plt.xlabel('Number of Trees')
-plt.ylabel('Error Rate')
-plt.title('Training and Testing Errors vs Number of Trees')
-plt.legend()
-plt.savefig("bagged_trees_error.png")
-plt.show()
+# plt.xlabel('Number of Trees')
+# plt.ylabel('Error Rate')
+# plt.title('Training and Testing Errors vs Number of Trees')
+# plt.legend()
+# plt.savefig("bagged_trees_error.png")
+# plt.show()
 
 single_tree = decision_tree.train(x_proc, y, attributes_proc)
 

@@ -92,7 +92,7 @@ The `run.sh` script is designed to automate the execution of Python scripts rela
 
 5. **Follow the Output**
 
-   The script will start executing and you will see output indicating which Python scripts are being run. The scripts display the training and testing errors from each decision tree.
+   The script will start executing and you will see output indicating which homework problem number a script is is being run for.
 
 6. **Completion**
 
@@ -100,5 +100,6 @@ The `run.sh` script is designed to automate the execution of Python scripts rela
 
 ## Additional Notes
 
+- The `squared_error.py` scripts take three command line arguments for the number of predictors, number of trees per predictor, and number of samples per predictor. In `run.sh`, they are set to the values used in homework report, but they can be changed to reduce runtime. 
 - The `run.sh` script will only work from the root project directory, due to `PYTHONPATH` being set to the current working directory.
 ---

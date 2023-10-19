@@ -2,7 +2,7 @@ from Preprocessing.preprocessing import preprocess_numerical_attributes
 import os
 from EnsembleLearning.RandomForests import random_forests
 from DecisionTree import decision_tree
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 label_values = ['yes', 'no']
 attributes = [
@@ -107,17 +107,17 @@ for feature_subset_size in feature_subset_sizes:
     testing_errors_all.append(testing_errors)
 
 # plot the results
-num_trees_range = list(range(0, max_trees + 1, step))
-num_trees_range[0] = 1
+# num_trees_range = list(range(0, max_trees + 1, step))
+# num_trees_range[0] = 1
 
-plt.figure()
+# plt.figure()
 
-for idx, feature_subset_size in enumerate(feature_subset_sizes):
-    plt.plot(num_trees_range, training_errors_all[idx], label=f'Training Errors (Subset Size {feature_subset_size})')
-    plt.plot(num_trees_range, testing_errors_all[idx], label=f'Testing Errors (Subset Size {feature_subset_size})')
+# for idx, feature_subset_size in enumerate(feature_subset_sizes):
+#     plt.plot(num_trees_range, training_errors_all[idx], label=f'Training Errors (Subset Size {feature_subset_size})')
+#     plt.plot(num_trees_range, testing_errors_all[idx], label=f'Testing Errors (Subset Size {feature_subset_size})')
 
-plt.xlabel('Number of Trees')
-plt.ylabel('Error Rate')
-plt.title('Training and Testing Errors vs Number of Trees')
-plt.legend()
-plt.savefig(f"random_forest_err_all_subsets.png")
+# plt.xlabel('Number of Trees')
+# plt.ylabel('Error Rate')
+# plt.title('Training and Testing Errors vs Number of Trees')
+# plt.legend()
+# plt.savefig(f"random_forest_err_all_subsets.png")

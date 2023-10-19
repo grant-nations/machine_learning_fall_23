@@ -1,7 +1,7 @@
 import os
 import numpy as np
 from LinearRegression.BatchGradDescent import batch_grad_descent
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 features = [
     "Cement",
