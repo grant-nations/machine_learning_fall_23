@@ -1,6 +1,7 @@
 from DecisionStump import decision_stump
 from math import exp, log
 
+
 def train(x, y, attributes, num_iters):
     """
     :param x: the x values to train on
@@ -19,7 +20,8 @@ def train(x, y, attributes, num_iters):
 
         prediction_error = 0
 
-        predictions = [decision_stump.predict(_x, attributes, stump) for _x in x]
+        predictions = [decision_stump.predict(
+            _x, attributes, stump) for _x in x]
 
         for i, _y in enumerate(y):
             if _y != predictions[i]:
@@ -27,7 +29,8 @@ def train(x, y, attributes, num_iters):
 
         alpha = 0.5 * log((1 - prediction_error) / prediction_error)
 
-        ensemble.append((alpha, stump,))  # add the weak classifier (stump) to the ensemble
+        # add the weak classifier (stump) to the ensemble
+        ensemble.append((alpha, stump,))
 
         for i in range(len(d)):
             exp_coeff = exp(-alpha) if y[i] == predictions[i] else exp(alpha)
@@ -50,7 +53,8 @@ def predict(x, attributes, ensemble):
     :return: the top-voted label by the ensemble
     """
 
-    votes = [decision_stump.predict(x, attributes, ensemble[i][1]) for i in range(len(ensemble))]
+    votes = [decision_stump.predict(x, attributes, ensemble[i][1])
+             for i in range(len(ensemble))]
 
     labels = {}
 
