@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from LinearRegression.BatchGradDescent import batch_grad_descent
+from LinearRegression.StochasticGradDescent import stochastic_grad_descent
 import matplotlib.pyplot as plt
 
 features = [
@@ -30,21 +30,21 @@ Y = np.array(Y)
 
 w = np.zeros_like(X[0])
 
-learning_rate = 0.015
-w, costs = batch_grad_descent.train(X, Y, w, learning_rate)
+learning_rate = 0.004
+w, costs = stochastic_grad_descent.train(X, Y, w, learning_rate)
 print("weights: ", end='')
 for _w in w:
     print(f"{_w}, ", end='')
 print()
 print(f"final cost: {costs[-1]}")
 
-# iterations = list(range(len(costs)))
+iterations = list(range(len(costs)))
 
-# # Plot costs vs iterations
+# Plot costs vs iterations
 # plt.plot(iterations, costs, label='Cost')
 # plt.xlabel('Iterations')
 # plt.ylabel('Cost')
-# plt.title('Batch Gradient Descent Cost vs Iterations')
+# plt.title('Stochastic Gradient Descent Cost vs Iterations')
 # plt.legend()
 # plt.show()
 

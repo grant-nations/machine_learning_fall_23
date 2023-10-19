@@ -56,15 +56,15 @@ Examples of how to use these functions can be found in the `predict_banking.py`,
 
 ---
 ---
-# Homework 1 Execution Guide
+# Homework 2 Execution Guide
 
-This shell script is designed to automate the execution of Python scripts related to problem sets 2b, 3a, and 3b using a Decision Tree model. Follow the steps below to run the script:
+The `run.sh` script is designed to automate the execution of Python scripts related to homework 2. Follow the steps below to run the script:
 
 ## Instructions
 
 1. **Clone the Repository**
 
-   Clone or download the repository for homework 1.
+   Clone or download the repository for homework 2.
 
    ```
    git clone https://github.com/grant-nations/machine_learning_fall_23.git
