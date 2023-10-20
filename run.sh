@@ -17,7 +17,7 @@ echo -e "\nRunning python script for problem 2c...\n"
 # the first argument is the number of predictors
 # the second argument is the number of trees per predictor
 # the third argument is the number of samples per predictor
-python3 EnsembleLearning/BaggedTrees/squared_error.py 10 50 100
+python3 EnsembleLearning/BaggedTrees/squared_error.py 100 500 1000
 
 
 # PROBLEM 2D
@@ -30,7 +30,7 @@ echo -e "\nRunning python script for problem 2e...\n"
 # the first argument is the number of predictors
 # the second argument is the number of trees per predictor
 # the third argument is the number of samples per predictor
-python3 EnsembleLearning/RandomForests/squared_error.py 10 50 100
+python3 EnsembleLearning/RandomForests/squared_error.py 100 500 1000
 
 # PROBLEM 4A
 echo -e "\nRunning python script for problem 4a...\n"
