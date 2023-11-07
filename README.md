@@ -52,13 +52,117 @@ The `decision_tree.py` module in the `DecisionTree` directory provides functions
 
 Examples of how to use these functions can be found in the `predict_banking.py`, `predict_car.py`, and `predict_banking_proc_unknowns.py` files.
 
+---
 
+# Adaboost Functions
+
+The `adaboost.py` module in `EnsembleLearning/Adaboost` provides functions to train and use the Adaboost classifier.
+
+1. `train(x, y, attributes, num_iters)`
+   - `x`: the x values to train on
+   - `y`: the corresponding labels to the training data
+   - `attributes`: list of attributes as tuples of (attribute, possible values)
+   - `num_iters`: number of iterations to run the algorithm for
+
+   - **Returns:** `ensemble`: a list of tuples containing (alpha, stump) where alpha is the vote weight and stump is a weak classifier.
+
+2. `predict(x, attributes, ensemble)`
+
+   - `x`: example to predict label of
+   - `attributes`: list of attributes as tuples of (attribute, possible values)
+   - `ensemble`: a list of tuples containing (alpha, classifier) used to predict the label
+
+   - **Returns:** The top-voted label by the ensemble.
+
+## Usage
+
+Examples of how to use these functions can be found in the `predict_banking.py` file.
 
 ---
----
-# Homework 2 Execution Guide
 
-The `run.sh` script is designed to automate the execution of Python scripts related to homework 2. Follow the steps below to run the script:
+# Bagged Trees Functions
+
+The `bagged_trees.py` module in `EnsembleLearning/BaggedTrees` implements a bagged trees classifier.
+
+1. `train(x: List[Any], y: List[str], attributes: List[Tuple[str, List[Union[str, int]]]], num_trees: int, tree_depth: Union[int, None] = None)`
+     - `x`: The feature values to train on.
+     - `y`: The corresponding labels for the training data.
+     - `attributes`: A list of attributes as tuples of (attribute, possible values).
+     - `num_trees`: The number of trees to use in the ensemble.
+     - `tree_depth`: The maximum depth of each decision tree (default is `None`).
+
+2. `predict(x: List[Any], attributes: List[Tuple[str, List[Union[str, int]]]], ensemble: List[Dict[Any, Any]]) -> Any`
+     - `x`: The example to predict the label of.
+     - `attributes`: A list of attributes as tuples of (attribute, possible values).
+     - `ensemble`: A list of decision trees used for prediction.
+
+## Usage
+
+Examples of how to use these functions can be found in the `predict_banking.py` file.
+
+---
+
+# Random Forests Functions
+
+The `random_forests.py` module in `EnsembleLearning/RandomForests` implements a random forests classifier.
+
+1. `train(x: List[Any], y: List[str], attributes: List[Tuple[str, List[Union[str, int]]]], num_trees: int, tree_depth: Union[int, None] = None)`
+     - `x`: The feature values to train on.
+     - `y`: The corresponding labels for the training data.
+     - `attributes`: A list of attributes as tuples of (attribute, possible values).
+     - `num_trees`: The number of trees to use in the ensemble.
+     - `feature_subset_size`: the number of features to use at each node.
+
+2. `predict(x: List[Any], attributes: List[Tuple[str, List[Union[str, int]]]], ensemble: List[Dict[Any, Any]]) -> Any`
+     - `x`: The example to predict the label of.
+     - `attributes`: A list of attributes as tuples of (attribute, possible values).
+     - `ensemble`: A list of decision trees used for prediction.
+
+## Usage
+
+Examples of how to use these functions can be found in the `predict_banking.py` file.
+
+---
+
+# Gradient Descent Functions
+
+The `batch_grad_descent.py` module in `LinearRegression/BatchGradDescent` and `stochastic_grad_descent.py` in `LinearRegression/StochasticGradDescent` implement batch and stochastic gradient descent, respectively. They both implement the following functions:
+
+1. `predict(x: npt.ArrayLike, w: npt.ArrayLike) -> npt.ArrayLike`
+   
+   Predicts the value of `x` using linear regression.
+   
+    - `x`: The `x` value.
+    - `w`: The weight vector.
+
+2. `loss(X: npt.NDArray, Y: npt.NDArray, w: npt.ArrayLike) -> float`
+
+   Computes the loss using the squared error loss function.
+   
+     - `X`: The training examples.
+     - `Y`: The training labels.
+     - `w`: The weight vector.
+
+3. `train(X: npt.NDArray, Y: npt.NDArray, w: npt.ArrayLike, r: float, convergence_tol: float = 1e-6) -> Tuple[npt.ArrayLike, npt.ArrayLike]`
+
+   Performs gradient descent on the squared error loss function.
+   
+     - `X`: The training examples.
+     - `Y`: The training labels.
+     - `w`: The weight vector.
+     - `r`: The learning rate.
+     - `convergence_tol`: The tolerance for convergence (default is `1e-6`).
+
+## Usage
+
+Examples of how to use these functions can be found in the `predict_concrete.py` files.
+
+---
+
+
+# Homework 3 Execution Guide
+
+The `run.sh` script is designed to automate the execution of Python scripts related to homework 3. Follow the steps below to run the script:
 
 ## Instructions
 
