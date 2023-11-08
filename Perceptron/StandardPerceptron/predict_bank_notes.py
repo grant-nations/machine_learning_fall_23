@@ -1,11 +1,13 @@
 import os
 import pandas as pd
-from Perceptron.perceptron import train, predict
+from Perceptron.StandardPerceptron.perceptron import train, predict
 
-data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Data', 'bank_note')
+data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'Data', 'bank_note')
 train_data = pd.read_csv(os.path.join(data_dir, 'train.csv'), header=None)
 
-X = train_data.iloc[:, :-1].to_numpy()
+X = train_data.iloc[:, :-1]
+X.insert(len(X.columns), 'newcol', 1)
+X = X.to_numpy()
 y = train_data.iloc[:, -1].replace(0, -1)
 y = y.to_numpy()
 
@@ -17,7 +19,9 @@ print(f"Learned weight vector: {w}")
 
 test_data = pd.read_csv(os.path.join(data_dir, 'test.csv'), header=None)
 
-X_test = test_data.iloc[:, :-1].to_numpy()
+X_test = test_data.iloc[:, :-1]
+X_test.insert(len(X_test.columns), 'newcol', 1)
+X_test = X_test.to_numpy()
 y_test = test_data.iloc[:, -1].replace(0, -1)
 y_test = y_test.to_numpy()
 
