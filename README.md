@@ -159,16 +159,98 @@ Examples of how to use these functions can be found in the `predict_concrete.py`
 
 ---
 
+# Average Perceptron Functions
 
-# Homework 3 Execution Guide
+The `average_perception.py` module in `Perceptron/AveragePerceptron` implements the following functions:
 
-The `run.sh` script is designed to automate the execution of Python scripts related to homework 3. Follow the steps below to run the script:
+
+1. `train(X: npt.NDArray, y: npt.NDArray, r: float, epochs: int)`
+
+   Trains an average perceptron
+   
+     - `X`: The training examples.
+     - `Y`: The training labels.
+     - `r`: The learning rate.
+     - `epochs`: The number of epochs to perform
+
+2. `predict(x: npt.ArrayLike, a: npt.ArrayLike)`
+   
+   Predicts the value of `x` using averaged perceptron.
+   
+    - `x`: The `x` value.
+    - `w`: The averaged weight vector
+
+## Usage
+
+Examples of how to use these functions can be found in the `predict_bank_notes.py` file.
+
+---
+
+# Standard Perceptron Functions
+
+The `perception.py` module in `Perceptron/StandardPerceptron` implements the following functions:
+
+
+1. `train(X: npt.NDArray, y: npt.NDArray, r: float, epochs: int)`
+
+   Trains a standard perceptron
+   
+     - `X`: The training examples.
+     - `Y`: The training labels.
+     - `r`: The learning rate.
+     - `epochs`: The number of epochs to perform
+
+2. `predict(x: npt.ArrayLike, w: npt.ArrayLike)`
+   
+   Predicts the value of `x` using weighted perceptron.
+   
+    - `x`: The `x` value.
+    - `w`: The weight vector
+
+## Usage
+
+Examples of how to use these functions can be found in the `predict_bank_notes.py` file.
+
+---
+
+# Voted Perceptron Functions
+
+The `voted_perception.py` module in `Perceptron/VotedPerceptron` implements the following functions:
+
+
+1. `train(X: npt.NDArray, y: npt.NDArray, r: float, epochs: int)`
+
+   Trains a voted perceptron
+   
+     - `X`: The training examples.
+     - `Y`: The training labels.
+     - `r`: The learning rate.
+     - `epochs`: The number of epochs to perform
+
+2. `predict(x: npt.ArrayLike, w_arr: List[npt.ArrayLike], counts: List[int])`
+   
+   Predicts the value of `x` using voted perceptron.
+   
+    - `x`: The `x` value.
+    - `w_arr`: List of weight vectors
+    - `counts`: List of counts for each weight vector
+
+## Usage
+
+Examples of how to use these functions can be found in the `predict_bank_notes.py` file.
+
+---
+
+
+# Homework 4 Execution Guide
+
+The `run.sh` script is designed to automate the execution of Python scripts related to homework 4. Follow the steps below to run the script:
 
 ## Instructions
 
 1. **Clone the Repository**
 
-   Clone or download the repository for homework 2.
+   Clone or download the repository.
 
    ```
    git clone https://github.com/grant-nations/machine_learning_fall_23.git
@@ -204,6 +286,5 @@ The `run.sh` script is designed to automate the execution of Python scripts rela
 
 ## Additional Notes
 
-- The `squared_error.py` scripts take three command line arguments for the number of predictors, number of trees per predictor, and number of samples per predictor. In `run.sh`, they are set to the values used in homework report, but they can be changed to reduce runtime. 
 - The `run.sh` script will only work from the root project directory, due to `PYTHONPATH` being set to the current working directory.
 ---

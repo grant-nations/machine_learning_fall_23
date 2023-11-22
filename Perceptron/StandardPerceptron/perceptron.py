@@ -33,7 +33,7 @@ def train(X: npt.NDArray,
 def predict(x: npt.ArrayLike,
             w: npt.ArrayLike):
     """
-    Predict the value of x using linear regression
+    Predict the value of x using standard perceptron
 
     :param x: x value
     :param w: weight vector

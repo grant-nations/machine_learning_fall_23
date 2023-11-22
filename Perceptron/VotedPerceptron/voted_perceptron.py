@@ -8,7 +8,7 @@ def train(X: npt.NDArray,
           r: float,
           epochs: int):
     """
-    Train a standard perceptron
+    Train a voted perceptron
 
     :param X: training examples
     :param y: training labels
@@ -42,7 +42,7 @@ def predict(x: npt.ArrayLike,
             w_arr: List[npt.ArrayLike],
             counts: List[int]):
     """
-    Predict the value of x using linear regression
+    Predict the value of x using voted perceptron
 
     :param x: x value
     :param w_arr: List of weight vectors
