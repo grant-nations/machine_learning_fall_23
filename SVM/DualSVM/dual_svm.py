@@ -1,10 +1,12 @@
 from scipy.optimize import minimize
 import numpy.typing as npt
 import numpy as np
+from typing import Callable
 
 def train(X: npt.NDArray,
           y: npt.ArrayLike,
-          c: int):
+          c: int,
+          kernel: Callable = lambda x, y: x @ y.T):
     """
     Train the dual form of an SVM classifier
 
@@ -15,23 +17,9 @@ def train(X: npt.NDArray,
     
     def _equality_constraint(alpha):
         return np.sum(alpha * y)
-
-    # below is the inefficient way of doing this
-
-    # def _dual_svm_loss(alpha):
-
-    #     loss = 0
-
-    #     for i in range(len(X)):
-    #         for j in range(len(X)):
-    #             loss += (1/2) * y[i] * y[j] * alpha[i] * alpha[j] * X[i] @ X[i]
-        
-    #     loss -= np.sum(alpha)
-
-    #     return loss
     
     def _dual_svm_loss(alpha):
-        return (1/2) * alpha.T @ (y[:, np.newaxis] * X) @ (y[:, np.newaxis] * X).T @ alpha - np.sum(alpha)    
+        return (1/2) * (alpha * y) @ kernel(X, X) @ (alpha * y) - np.sum(alpha)
         
     alpha_guess = np.zeros_like(y)
 
@@ -57,13 +45,13 @@ def train(X: npt.NDArray,
 
     b_optimal /= b_optimal_count
 
-    return w_optimal, b_optimal
+    return w_optimal, b_optimal, alpha_optimal
 
 def predict(x: npt.ArrayLike,
             w: npt.ArrayLike,
             b: float):
     """
-    Predict the value of x using SVM in primal form
+    Predict the value of x using SVM in dual form
 
     :param x: x value
     :param w: weight vector
@@ -73,3 +61,23 @@ def predict(x: npt.ArrayLike,
     """
     
     return np.sign(w @ x.T + b)
+
+def predict_with_alpha(x: npt.ArrayLike,
+                       X: npt.NDArray,
+                       y: npt.ArrayLike,
+                       alpha: npt.ArrayLike,
+                       b: float,
+                       kernel: Callable = lambda x, y: x @ y.T):
+    """
+    Predict the value of x using SVM in dual form
+
+    :param x: x value
+    :param X: training examples
+    :param y: training labels
+    :param alpha: alpha values
+    :param b: bias value
+
+    :return: predicted value
+    """
+    
+    return np.sign(np.sum(alpha[:, np.newaxis] * y[:, np.newaxis] * kernel(X, x), axis=0) + b)
