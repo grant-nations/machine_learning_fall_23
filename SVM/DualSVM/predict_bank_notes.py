@@ -21,44 +21,39 @@ y_test = y_test.to_numpy()
 
 # PART A -----------------------
 
-# print("------------- PART A ------------- \n")
+print("------------- PART A ------------- \n")
 
-# for c in [(100/873), (500/873), (700/873)]:
-#     print(f"using c = {c}")
-#     print("------------------------------\n")
-#     w, b, _ = train(X, y, c)
+for c in [(100/873), (500/873), (700/873)]:
+    print(f"using c = {c}")
+    print("------------------------------\n")
+    w, b, _ = train(X, y, c)
 
-#     print(f"Learned weight vector: {w}")
-#     print(f"bias: {b}")
+    print(f"Learned weight vector: {w}")
+    print(f"bias: {b}")
 
-#     incorrect_predictions = 0
+    incorrect_predictions = 0
 
-#     for X_i, y_i in zip(X, y):
-#         if predict(X_i, w, b) != y_i:
-#             incorrect_predictions += 1
+    for X_i, y_i in zip(X, y):
+        if predict(X_i, w, b) != y_i:
+            incorrect_predictions += 1
 
-#     print(f"Training error: {incorrect_predictions/len(X_test)}")
+    print(f"Training error: {incorrect_predictions/len(X_test)}")
 
-#     incorrect_predictions = 0
+    incorrect_predictions = 0
 
-#     for X_i, y_i in zip(X_test, y_test):
-#         if predict(X_i, w, b) != y_i:
-#             incorrect_predictions += 1
+    for X_i, y_i in zip(X_test, y_test):
+        if predict(X_i, w, b) != y_i:
+            incorrect_predictions += 1
 
-#     print(f"Testing error: {incorrect_predictions/len(X_test)}\n")
+    print(f"Testing error: {incorrect_predictions/len(X_test)}\n")
 
 # PART B -----------------------
 
 
 def gaussian_kernel(x, y, gamma):
-    N, _ = x.shape
-    K = np.zeros((N, N))
-
     distances = np.abs(np.sum(x**2, axis=1, keepdims=True) - 2 * (x @ y.T) + np.sum(y.T**2, axis=0, keepdims=True))
 
-    K = np.exp(-distances / gamma)
-
-    return K
+    return np.exp(-distances / gamma)
 
 
 print("------------- PART B ------------- \n")

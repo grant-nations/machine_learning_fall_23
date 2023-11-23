@@ -80,4 +80,6 @@ def predict_with_alpha(x: npt.ArrayLike,
     :return: predicted value
     """
     
-    return np.sign(np.sum(alpha[:, np.newaxis] * y[:, np.newaxis] * kernel(X, x), axis=0) + b)
+    extended_x = np.tile(x, (len(X), 1))
+
+    return np.sign(np.sum((alpha * y) @ kernel(extended_x, X)) + b)
