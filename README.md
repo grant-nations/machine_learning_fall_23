@@ -241,10 +241,82 @@ Examples of how to use these functions can be found in the `predict_bank_notes.p
 
 ---
 
+# Primal SVM Functions
 
-# Homework 4 Execution Guide
+The `primal_svm.py` module in `SVM/PrimalSVM` implements the following functions:
 
-The `run.sh` script is designed to automate the execution of Python scripts related to homework 4. Follow the steps below to run the script:
+
+1. `train(X: npt.NDArray, y: npt.NDArray, r: float, c: float, epochs: int, lr_func: Union[Callable, None] = None`
+
+   Trains an SVM classifier in the primal domain
+   
+     - `X`: The training examples.
+     - `Y`: The training labels.
+     - `r`: Learning rate.
+     - `c`: Tradeoff hyperparameter.
+     - `epochs`: Epochs to perform gradient descent.
+     - `lr_func`: Learning rate decay function.
+
+   - **Returns:** A tuple containing the optimal weight parameters and loss values at each update
+
+2. `predict(x: npt.ArrayLike, w: npt.ArrayLike)`
+   
+   Predicts the value of `x` using weights and biases.
+   
+    - `x`: The `x` value.
+    - `w`: Optimal weights, including bias parameter.
+
+## Usage
+
+Examples of how to use these functions can be found in the `predict_bank_notes.py` file.
+
+---
+
+# Dual SVM Functions
+
+The `dual_svm.py` module in `SVM/DualSVM` implements the following functions:
+
+
+1. `train(X: npt.NDArray, y: npt.NDArray, c: float, kernel: Callable = lambda x, y: x @ y.T)`
+
+   Trains an SVM classifier in the dual domain
+   
+     - `X`: The training examples.
+     - `Y`: The training labels.
+     - `c`: Tradeoff hyperparameter.
+     - `kernel`: The kernel function to use. Defaults to `lambda x, y: x @ y.T`
+
+   - **Returns:** A tuple containing the optimal weight, bias, and alpha parameters
+
+2. `predict(x: npt.ArrayLike, w: npt.ArrayLike, b: float)`
+   
+   Predicts the value of `x` using weights and biases.
+   
+    - `x`: The `x` value.
+    - `w`: Optimal weights.
+    - `b`: Optimal bias parameter.
+
+3. `predict_with_alpha(x: npt.ArrayLike, X: npt.NDArray, y: npt.ArrayLike, alpha: npt.ArrayLike, b: float, kernel: Callable = lambda x, y: x @ y.T)`
+
+   Predicts the value of `x` using alpha parameters.
+
+   - `x`: The `x` value.
+   - `X`: All training examples.
+   - `y`: All training labels.
+   - `alpha`: Learned alpha parameters.
+   - `b`: Bias parameter.
+   - `kernel`: Kernel used in training.
+
+## Usage
+
+Examples of how to use these functions can be found in the `predict_bank_notes.py` file.
+
+---
+
+
+# Homework 5 Execution Guide
+
+The `run.sh` script is designed to automate the execution of Python scripts related to homework 5. Follow the steps below to run the script:
 
 ## Instructions
 

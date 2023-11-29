@@ -13,6 +13,7 @@ def train(X: npt.NDArray,
     :param X: training examples
     :param y: training labels
     :param c: hyperparameter
+    :param kernel: kernel function
     """
     
     def _equality_constraint(alpha):
@@ -76,6 +77,7 @@ def predict_with_alpha(x: npt.ArrayLike,
     :param y: training labels
     :param alpha: alpha values
     :param b: bias value
+    :param kernel: kernel function used in training
 
     :return: predicted value
     """
