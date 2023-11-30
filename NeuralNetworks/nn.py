@@ -133,6 +133,15 @@ class ThreeLayerNN:
               epochs: int,
               gamma_0: float,
               d: float) -> None:
+        """
+        Train the model via stochastic gradient descent. 
+
+        :param X: The training data.
+        :param y: The training labels.
+        :param epochs: The number of epochs to train for.
+        :param gamma_0: The initial learning rate.
+        :param d: The decay rate.
+        """
 
         loss_history = []
 

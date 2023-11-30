@@ -313,6 +313,49 @@ Examples of how to use these functions can be found in the `predict_bank_notes.p
 
 ---
 
+# Neural Network Functions
+
+The `nn.py` module in `NeuralNetworks` implements the following functions within the `ThreeLayerNN` class:
+
+
+1. `__init__(self, w1: npt.ArrayLike, w2: npt.ArrayLike, w3: npt.ArrayLike, b1: float, b2: float, b3: float)`
+
+   Initialize a three layer neural network with weights and biases.
+
+2. `step(self, x: npt.ArrayLike, y: int, verbose: bool = False)`
+
+   Perform a forward and backward pass for a single data point, updating the weights.
+
+   - `x`: x value to pass through model.
+   - `y`: Label for x value.
+
+    - **Returns:** Loss and gradient of loss with respect to weights.
+
+
+3. `train(self, X: npt.NDArray, y: npt.ArrayLike, epochs: int, gamma_0: float, d: float)`
+
+   Train the model via stochastic gradient descent. 
+
+   - `X`: The training data.
+   - `y`: The training labels.
+   - `epochs`: The number of epochs to train for.
+   - `gamma_0`: The initial learning rate.
+   - `d`: The decay rate.
+
+4. `predict(self, x: npt.ArrayLike)`
+   
+   Predicts the value of `x` using weights and biases of the neural network object.
+   
+    - `x`: The `x` value.
+
+    - **Returns:** 0 or 1.
+
+## Usage
+
+Examples of how to use these functions can be found in the `predict_bank_notes.py` file.
+
+---
+
 
 # Homework 5 Execution Guide
 
