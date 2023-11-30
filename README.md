@@ -401,5 +401,6 @@ The `run.sh` script is designed to automate the execution of Python scripts rela
 
 ## Additional Notes
 
+- In case homework 4 has not yet been graded, `run.sh` contains the commented code necessary to run that assignment.
 - The `run.sh` script will only work from the root project directory, due to `PYTHONPATH` being set to the current working directory.
 ---
