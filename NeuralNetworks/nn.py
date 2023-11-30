@@ -77,29 +77,24 @@ class ThreeLayerNN:
 
         # _____ layer 3 _____
 
-        # dlayer_3 = dprediction * self.w3  # (1,) * (H2,) -> (H2,)
         dlayer_3 = layer_3 - y # (1,)
         if verbose:
             print(f"dlayer_3: {dlayer_3}")
 
-        # dw3 = dprediction * layer_2_sig  # (1,) * (H2,) -> (H2,)
         dw3 = layer_2_sig * dlayer_3 # (H2,) * (1,) -> (H2,)
         if verbose:
             print(f"dw3: {dw3}")
 
-        # db3 = dprediction  # (1,)
         db3 = dlayer_3 # (1,)
         if verbose:
             print(f"db3: {db3}")
 
         # _____ layer 2 _____
 
-        # dlayer_2_sig = dlayer_3 * layer_2_sig * (1 - layer_2_sig)  # (H2,) * (H2,) * (H2,) -> (H2,)
         dlayer_2_sig = dlayer_3 * self.w3 # (1,) * (H2,) -> (H2,)
         if verbose:
             print(f"dlayer_2_sig: {dlayer_2_sig}")
 
-        # dlayer_2 = dlayer_2_sig * self.w2.T  # (H2,) * (H2, H1) -> 
         dlayer_2 = layer_2_sig * (1 - layer_2_sig) * dlayer_2_sig # (H2,) * (H2,) * (H2,) -> (H2,)
         if verbose:
             print(f"dlayer_2: {dlayer_2}")
@@ -114,12 +109,10 @@ class ThreeLayerNN:
 
         # _____ layer 1 _____
 
-        # dlayer_1_sig = dlayer_2 * layer_1_sig * (1 - layer_1_sig)  # (H1,) * (H1,) * (H1,) -> (H1,)
         dlayer_1_sig = dlayer_2 @ self.w2.T # (H2,) @ (H2, H1) -> (H1,)
         if verbose:
             print(f"dlayer_1_sig: {dlayer_1_sig}")
 
-        # dlayer_1 = dlayer_1_sig @ self.w1.T  # (H1,) @ (H1, D) -> (D,)
         dlayer_1 = layer_1_sig * (1 - layer_1_sig) * dlayer_1_sig # (H1,) * (H1,) * (H1,) -> (H1,)
         if verbose:
             print(f"dlayer_1: {dlayer_1_sig}")
